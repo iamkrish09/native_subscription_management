@@ -1,53 +1,35 @@
 import "@/global.css"
-import { Text, View } from "react-native";
-import {Link} from "expo-router";
+import { Image, Text, View } from "react-native";
+import images from "@/constants/images"
+import {icons} from "@/constants/icons";
 import {styled} from "nativewind";
 import {SafeAreaView as RNSafeAreaView} from "react-native-safe-area-context";
 const SafeAreaView = styled(RNSafeAreaView);
 
+import {HOME_BALANCE, HOME_USER} from "@/constants/data";
+import {formatCurrency} from "@/lib/utils";
+
 export default function App() {
     return (
         <SafeAreaView className="flex-1 bg-background p-5">
-            <Text className="text-7xl font-sans-extrabold text-primary">
-                Home
-            </Text>
+            <View className="home-header">
+                <View className="home-user">
+                     <Image source={images.avatar} className="home-avatar" />
+                    <Text className="home-user-name">{HOME_USER.name}</Text>
+                </View>
 
-            <Link
-                href="/onboarding"
-                className="mt-4 font-sans-bold rounded bg-primary text-white p-4"
-            >
-                Go to Onboarding
-            </Link>
+                <Image source={icons.add} className="home-add-icon"></Image>
+            </View>
 
-            <Link
-                href="/sign-in"
-                className="mt-4 font-sans-bold  rounded bg-primary text-white p-4"
-            >
-                Go to Login!
-            </Link>
+            <View className="home-balance-card">
+                <Text className="home-balance-label">Balance</Text>
 
-            <Link
-                href="/sign-up"
-                className="mt-4 font-sans-bold rounded bg-primary text-white p-4"
-            >
-                Go to SignUp!
-            </Link>
-
-            {/*<Link*/}
-            {/*    href="/subscriptions/spotify"*/}
-            {/*>*/}
-            {/*    Spotify Subscription!*/}
-            {/*</Link>*/}
-
-            {/*<Link*/}
-            {/*    href={{*/}
-            {/*        pathname: "/subscriptions/[id]",*/}
-            {/*        params: {id: "claude"}*/}
-            {/*    }}*/}
-
-            {/*>*/}
-            {/*    Claude Max Subscription!*/}
-            {/*</Link>*/}
+                <View className="home-balance-row">
+                    <Text className="home-balance-amount">
+                        {formatCurrency(HOME_BALANCE.amount)}
+                    </Text>
+                </View>
+            </View>
         </SafeAreaView>
     );
 }

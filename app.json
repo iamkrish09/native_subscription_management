@@ -40,7 +40,7 @@
         }
       ],
       [
-        "expo-fonts" ,{ "fonts" : [
+        "expo-font" ,{ "fonts" : [
         "./assers/fonts/PlusJakartaSans-Regular.ttf",
         "./assers/fonts/PlusJakartaSans-Bold.ttf",
         "./assers/fonts/PlusJakartaSans-Medium.ttf",
