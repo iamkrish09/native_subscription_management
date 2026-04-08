@@ -7,7 +7,7 @@ export default function SignIn() {
             <Text>
                 SignIn
             </Text>
-            <Link href="/(auth)/sign-in">Create Account</Link>
+            <Link href="/">Go back</Link>
         </View>
     );
 }
