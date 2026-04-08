@@ -1,17 +1,20 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 import React from 'react'
-import {formatCurrency} from "@/lib/utils";
+import {formatCurrency, formatStatusLabel, formatSubscriptionDateTime} from "@/lib/utils";
 import clsx from "clsx";
 
-const SubscriptionCard=({name, price, billing, icon, currency, color }: SubscriptionCardProps) => {
+const SubscriptionCard=({name, price, billing, icon, currency, color, category, plan, renewalDate, expanded, onPress, paymentMethod, startDate, status }: SubscriptionCardProps) => {
     return (
-        <View className={clsx('sub-card', 'bg-card')} style={color ? { backgroundColor: color}: undefined}>
+        <Pressable onPress={onPress} className={clsx('sub-card', expanded?'sub-card-expanded' : 'bg-card')} style={!expanded && color ? { backgroundColor: color}: undefined}>
             <View className="sub-head">
                 <View className="sub-main">
                     <Image source={icon} className="sub-icon"/>
                     <View className="sub-copy">
                         <Text numberOfLines={1} className="sub-title">
                             {name}
+                        </Text>
+                        <Text numberOfLines={1} ellipsizeMode="tail" className="syb-meta">
+                            {category?.trim() || plan?.trim() ||(renewalDate ? formatSubscriptionDateTime(renewalDate) : '')}
                         </Text>
                     </View>
                 </View>
@@ -20,7 +23,59 @@ const SubscriptionCard=({name, price, billing, icon, currency, color }: Subscrip
                     <Text className="sub-billing">{billing}</Text>
                 </View>
             </View>
-        </View>
+
+            {expanded && (
+                <View className="sub-bdy">
+                    <View className="sub-details">
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
+                                <Text className="sub-lable">Payment :</Text>
+                                <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+                                    {paymentMethod?.trim()}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
+                                <Text className="sub-lable">Category :</Text>
+                                <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+                                    {category?.trim()}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
+                                <Text className="sub-lable">Started :</Text>
+                                <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+                                    {startDate ? formatSubscriptionDateTime(startDate) : ''}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
+                                <Text className="sub-lable">Renewal Date :</Text>
+                                <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+                                    {renewalDate ? formatSubscriptionDateTime(renewalDate) : ''}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
+                                <Text className="sub-lable">Status :</Text>
+                                <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+                                    {status ? formatStatusLabel(status) : ''}
+                                </Text>
+                            </View>
+                        </View>
+
+                    </View>
+                </View>
+            )}
+        </Pressable>
     );
 }
 
